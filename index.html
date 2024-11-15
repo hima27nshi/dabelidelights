@@ -13,6 +13,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            overflow-x: hidden; /* Prevent horizontal scroll */
         }
 
         header {
@@ -36,19 +37,23 @@
         }
 
         .hero {
-            background-image: url('https://source.unsplash.com/1600x900/?indian-food,street-food');
-            background-size: cover;
-            background-position: center;
-            height: 500px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: #fff;
-            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Full screen height */
+            overflow: hidden;
         }
 
-        .hero h1 {
-            font-size: 4rem;
+        .hero img {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .hero img.active {
+            opacity: 1;
         }
 
         .content {
@@ -65,30 +70,6 @@
             color: #333;
             font-size: 1.2rem;
             line-height: 1.6;
-        }
-
-        /* Updated CSS for the image slider */
-        .image-slider {
-            display: flex;
-            overflow: hidden;
-            white-space: nowrap;
-            margin: 30px 0;
-            animation: scroll 10s linear infinite;
-        }
-
-        .image-slider img {
-            height: 200px;
-            margin-right: 20px;
-            border-radius: 10px;
-        }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(100%);
-            }
-            100% {
-                transform: translateX(-100%);
-            }
         }
 
         .footer {
@@ -127,7 +108,9 @@
     </header>
 
     <div class="hero">
-        <h1>The Best Dabeli in the Bay Area</h1>
+        <img src="img/dabeli1.jpeg" alt="Dabeli Image 1" class="active">
+        <img src="img/dabeli2.jpeg" alt="Dabeli Image 2">
+        <img src="img/dabeli3.jpeg" alt="Dabeli Image 3">
     </div>
 
     <section id="about" class="content">
@@ -139,11 +122,6 @@
 
     <section id="menu" class="content">
         <h2>Our Menu</h2>
-        <div class="image-slider">
-            <img src="img/dabeli1.jpeg" alt="Dabeli Image 1">
-            <img src="img/dabeli2.jpeg" alt="Dabeli Image 2">
-            <img src="img/dabeli3.jpeg" alt="Dabeli Image 3">
-        </div>
         <p>Explore our delicious offerings, from classic Dabeli filled with special masala, pomegranate, and peanuts, to
             unique variations crafted to satisfy your taste buds. Stay tuned for seasonal specialties and new additions!</p>
     </section>
@@ -162,6 +140,24 @@
     <footer class="footer">
         <p>&copy; 2024 Dabeli Delights. All rights reserved. Visit us at <a href="https://dabelidelights.com">dabelidelights.com</a></p>
     </footer>
+
+    <script>
+        // JavaScript to switch images every 3 seconds
+        let currentIndex = 0;
+        const images = document.querySelectorAll('.hero img');
+        const totalImages = images.length;
+
+        setInterval(() => {
+            // Remove the 'active' class from the current image
+            images[currentIndex].classList.remove('active');
+
+            // Increment the index, reset to 0 if it exceeds total images
+            currentIndex = (currentIndex + 1) % totalImages;
+
+            // Add the 'active' class to the next image
+            images[currentIndex].classList.add('active');
+        }, 3000); // Change image every 3 seconds
+    </script>
 </body>
 
 </html>
